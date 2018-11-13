@@ -1,5 +1,6 @@
 package Part_1;
 
+import static org.junit.Assume.assumeNoException;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ class StringManipTests {
 	@Test
 	void test() {
 		String letters = "These are the letters with which I would like to use in order to compose my message";
-		String message = "This is the message I want to write.";
+		String message = "This is the message I want to write";
 		assertTrue(checkRansomNote(letters, message));
 		
 		letters = "some words";
@@ -35,10 +36,14 @@ class StringManipTests {
 		char[] let = letters.toCharArray();
 		
 		for(int i = 0; i < let.length; i++) {
-			if(!map.containsValue(let[i])) {
-				map.put(let[i], 1);
+			System.out.println(map.containsKey(let[i]));
+			if(map.containsKey(let[i])) {
+				map.put(let[i], map.get(let[i])+1);
+				
+				
 			}else {
-				map.put(let[i], map.get(let[i]).intValue()+1);
+				System.out.println(let[i]);
+				map.put(let[i], 1);
 			}
 			
 		}
@@ -46,11 +51,31 @@ class StringManipTests {
 		System.out.println(map.entrySet() + " " + map.keySet());
 		
 		
-	
+		
+		char[] mes = message.toCharArray();
+		
+		
+		for(int i = 0; i< mes.length; i++) {
+			System.out.println(mes[i]+ " " + map.containsKey(mes[i]));
+			if(map.containsKey(mes[i])) {
+				if(map.get(mes[i])>0) {
+				map.put(mes[i], map.get(mes[i])-1);
+				}else {
+				map.remove(mes[i]);
+				}
+				
+			}else {
+				
+				return false;
+			}
+			
+			
+		}
 		
 		
 		
-		return false;
+		
+		return true;
 	}
 	
 	
